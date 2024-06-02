@@ -32,19 +32,14 @@ function changesKeys(yEvent) {
   );
 }
 
-const _observeHandlersMap = new Map();
-
 export function observe(yAbstractType, cb) {
   const newHandler = (evt, t) => {
     cb(evt, changesKeys(evt), t);
   };
 
-  _observeDeepHandlersMap.set(cb, newHandler);
   yAbstractType.observe(newHandler);
-  return () => yAbstractType.unobserve(_observeHandlersMap.get(cb));
+  return () => yAbstractType.unobserve(newHandler);
 }
-
-const _observeDeepHandlersMap = new Map();
 
 export function observeDeep(yAbstractType, cb) {
   const newHandler = (events, tr) =>
@@ -66,8 +61,7 @@ export function observeDeep(yAbstractType, cb) {
       ),
       tr,
     );
-  _observeDeepHandlersMap.set(cb, newHandler);
   yAbstractType.observeDeep(newHandler);
 
-  return () => yAbstractType.unobserveDeep(_observeDeepHandlersMap.get(cb));
+  return () => yAbstractType.unobserveDeep(newHandler);
 }
