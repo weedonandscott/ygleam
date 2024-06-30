@@ -1,6 +1,8 @@
 import * as Y from "yjs";
 
-import { List } from "./gleam.mjs";
+import { List, Ok, Error } from "./gleam.mjs";
+
+import { YArrayError, LengthExceeded } from "./ygleam/y_array.mjs";
 
 import { classifyKnownYValue, unwrapYValue } from "./utils.mjs";
 
@@ -31,16 +33,35 @@ export function length(yArray) {
 }
 
 export function insert(yArray, index, contentList) {
-  yArray.insert(index, unwrapContentList(contentList));
+  try {
+    yArray.insert(index, unwrapContentList(contentList));
+  } catch (e) {
+    if (e.message?.toLowerCase().includes("length exceeded")) {
+      return new Error(new LengthExceeded());
+    } else {
+      return new Error(new YArrayError());
+    }
+  }
 
-  return yArray;
+  return new Ok(yArray);
 }
 
 // `delete` is a reserved word
 export function delete_from_index(yArray, index, length) {
-  yArray.delete(index, length);
+  try {
+    yArray.delete(index, length);
+  } catch (e) {
+    if (
+      e instanceof Error &&
+      e.message?.toLowerCase().includes("length exceeded")
+    ) {
+      return new Error(new LengthExceeded());
+    } else {
+      return new Error(new YArrayError());
+    }
+  }
 
-  return yArray;
+  return new Ok(yArray);
 }
 
 export function push(yArray, contentList) {

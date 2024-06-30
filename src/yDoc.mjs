@@ -17,7 +17,13 @@ export function gc(yDoc) {
 
 export function transact(yDoc, cb, origin) {
   const unwrappedOrigin = unwrap(origin, undefined);
-  return yDoc.transact(cb, unwrappedOrigin);
+
+  let outcome;
+  yDoc.transact(() => {
+    outcome = cb();
+  }, unwrappedOrigin);
+
+  return outcome;
 }
 
 export function getArray(yDoc, name) {

@@ -8,6 +8,11 @@ import ygleam/y.{
 }
 import ygleam/y_event.{type AnyYEvent, type YArrayEvent}
 
+pub type YArrayError {
+  YArrayError
+  LengthExceeded
+}
+
 @external(javascript, "../yArray.mjs", "do_new")
 pub fn new() -> YArray
 
@@ -24,10 +29,18 @@ pub fn from(items: List(YValue)) -> YArray
 pub fn length(y_array: YArray) -> Int
 
 @external(javascript, "../yArray.mjs", "insert")
-pub fn insert(y_array: YArray, index: Int, items: List(YValue)) -> YArray
+pub fn insert(
+  y_array: YArray,
+  index: Int,
+  items: List(YValue),
+) -> Result(YArray, YArrayError)
 
 @external(javascript, "../yArray.mjs", "delete_from_index")
-pub fn delete(y_array: YArray, index: Int, length: Int) -> YArray
+pub fn delete(
+  y_array: YArray,
+  index: Int,
+  length: Int,
+) -> Result(YArray, YArrayError)
 
 pub fn delete_where(y_array: YArray, predicate: fn(YValue) -> Bool) -> YArray {
   y_array

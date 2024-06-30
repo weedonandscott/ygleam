@@ -13,7 +13,7 @@ pub fn client_id(y_doc: YDoc) -> String
 pub fn gc(y_doc: YDoc) -> Bool
 
 @external(javascript, "../yDoc.mjs", "transact")
-pub fn transact(y_doc: YDoc, cb: fn() -> Nil, origin: a) -> Nil
+pub fn transact(y_doc: YDoc, cb: fn() -> outcome, origin: a) -> outcome
 
 @external(javascript, "../yDoc.mjs", "getArray")
 pub fn get_array(y_doc: YDoc, name: String) -> YArray
