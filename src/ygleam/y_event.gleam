@@ -1,3 +1,4 @@
+import gleam/dict.{type Dict}
 import gleam/option.{type Option}
 import ygleam/y.{type Transaction, type YType, type YValue}
 
@@ -24,8 +25,15 @@ pub type PathSection {
   StringSection(String)
 }
 
+pub type ChangeAction {
+  AddAction(old_value: Option(YValue))
+  UpdateAction(old_value: Option(YValue))
+  DeleteAction(old_value: Option(YValue))
+  UnknownAction(old_value: Option(YValue))
+}
+
 pub type ChangesKeys =
-  List(#(String, String, Option(YValue)))
+  Dict(String, ChangeAction)
 
 @external(javascript, "../yEvent.mjs", "target")
 pub fn target(y_event: AnyYEvent) -> YType

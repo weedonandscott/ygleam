@@ -1,7 +1,7 @@
 import * as awarenessProtocol from "y-protocols/awareness.js";
 
 import { List, BitArray } from "./gleam.mjs";
-import { Dict } from "../gleam_stdlib/dict.mjs";
+import Dict from "../gleam_stdlib/dict.mjs";
 import { unwrap, None, Some } from "../gleam_stdlib/gleam/option.mjs";
 
 export function do_new(ydoc) {
