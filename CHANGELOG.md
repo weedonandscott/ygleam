@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.6.0
+
+- BREAKING: Upgrade depdencies (major versions)
+
 ## v0.5.0
 
 - Seems like some people are using this libray, so properly keep a changelog

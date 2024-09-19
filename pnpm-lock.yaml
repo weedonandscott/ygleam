@@ -1,81 +1,93 @@
-lockfileVersion: '6.0'
+lockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  y-protocols:
-    specifier: 1.0.6
-    version: 1.0.6(yjs@13.6.19)
-  yjs:
-    specifier: 13.6.19
-    version: 13.6.19
+importers:
 
-devDependencies:
-  husky:
-    specifier: 9.1.6
-    version: 9.1.6
-  prettier:
-    specifier: 3.3.3
-    version: 3.3.3
-  typescript:
-    specifier: 5.6.2
-    version: 5.6.2
+  .:
+    dependencies:
+      y-protocols:
+        specifier: 1.0.6
+        version: 1.0.6(yjs@13.6.19)
+      yjs:
+        specifier: 13.6.19
+        version: 13.6.19
+    devDependencies:
+      husky:
+        specifier: 9.1.6
+        version: 9.1.6
+      prettier:
+        specifier: 3.3.3
+        version: 3.3.3
+      typescript:
+        specifier: 5.6.2
+        version: 5.6.2
 
 packages:
 
-  /husky@9.1.6:
+  husky@9.1.6:
     resolution: {integrity: sha512-sqbjZKK7kf44hfdE94EoX8MZNk0n7HeW37O4YrVGCF4wzgQjp+akPAkfUK5LZ6KuR/6sqeAVuXHji+RzQgOn5A==}
     engines: {node: '>=18'}
     hasBin: true
-    dev: true
 
-  /isomorphic.js@0.2.5:
+  isomorphic.js@0.2.5:
     resolution: {integrity: sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==}
-    dev: false
 
-  /lib0@0.2.93:
+  lib0@0.2.93:
     resolution: {integrity: sha512-M5IKsiFJYulS+8Eal8f+zAqf5ckm1vffW0fFDxfgxJ+uiVopvDdd3PxJmz0GsVi3YNO7QCFSq0nAsiDmNhLj9Q==}
     engines: {node: '>=16'}
     hasBin: true
-    dependencies:
-      isomorphic.js: 0.2.5
-    dev: false
 
-  /lib0@0.2.97:
+  lib0@0.2.97:
     resolution: {integrity: sha512-Q4d1ekgvufi9FiHkkL46AhecfNjznSL9MRNoJRQ76gBHS9OqU2ArfQK0FvBpuxgWeJeNI0LVgAYMIpsGeX4gYg==}
     engines: {node: '>=16'}
     hasBin: true
-    dependencies:
-      isomorphic.js: 0.2.5
-    dev: false
 
-  /prettier@3.3.3:
+  prettier@3.3.3:
     resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
-  /typescript@5.6.2:
+  typescript@5.6.2:
     resolution: {integrity: sha512-NW8ByodCSNCwZeghjN3o+JX5OFH0Ojg6sadjEKY4huZ52TqbJTJnDo5+Tw98lSy63NZvi4n+ez5m2u5d4PkZyw==}
     engines: {node: '>=14.17'}
     hasBin: true
-    dev: true
 
-  /y-protocols@1.0.6(yjs@13.6.19):
+  y-protocols@1.0.6:
     resolution: {integrity: sha512-vHRF2L6iT3rwj1jub/K5tYcTT/mEYDUppgNPXwp8fmLpui9f7Yeq3OEtTLVF012j39QnV+KEQpNqoN7CWU7Y9Q==}
     engines: {node: '>=16.0.0', npm: '>=8.0.0'}
     peerDependencies:
       yjs: ^13.0.0
+
+  yjs@13.6.19:
+    resolution: {integrity: sha512-GNKw4mEUn5yWU2QPHRx8jppxmCm9KzbBhB4qJLUJFiiYD0g/tDVgXQ7aPkyh01YO28kbs2J/BEbWBagjuWyejw==}
+    engines: {node: '>=16.0.0', npm: '>=8.0.0'}
+
+snapshots:
+
+  husky@9.1.6: {}
+
+  isomorphic.js@0.2.5: {}
+
+  lib0@0.2.93:
+    dependencies:
+      isomorphic.js: 0.2.5
+
+  lib0@0.2.97:
+    dependencies:
+      isomorphic.js: 0.2.5
+
+  prettier@3.3.3: {}
+
+  typescript@5.6.2: {}
+
+  y-protocols@1.0.6(yjs@13.6.19):
     dependencies:
       lib0: 0.2.93
       yjs: 13.6.19
-    dev: false
 
-  /yjs@13.6.19:
-    resolution: {integrity: sha512-GNKw4mEUn5yWU2QPHRx8jppxmCm9KzbBhB4qJLUJFiiYD0g/tDVgXQ7aPkyh01YO28kbs2J/BEbWBagjuWyejw==}
-    engines: {node: '>=16.0.0', npm: '>=8.0.0'}
+  yjs@13.6.19:
     dependencies:
       lib0: 0.2.97
-    dev: false
