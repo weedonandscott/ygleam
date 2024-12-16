@@ -1,5 +1,11 @@
 # Changelog
 
+## v0.7.0
+
+- Fix UndoManager creation
+- Add `undo_manager.clear`
+- Upgrade depdencies
+
 ## v0.6.0
 
 - BREAKING: Upgrade depdencies (major versions)
