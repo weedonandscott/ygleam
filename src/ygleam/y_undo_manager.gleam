@@ -40,6 +40,9 @@ pub fn undo(undo_manager: YUndoManager) -> Nil
 @external(javascript, "../yUndoManager.mjs", "redo")
 pub fn redo(undo_manager: YUndoManager) -> Nil
 
+@external(javascript, "../yUndoManager.mjs", "clear")
+pub fn clear(undo_manager: YUndoManager) -> Nil
+
 @external(javascript, "../yUndoManager.mjs", "stopCapturing")
 pub fn stop_capturing(undo_manager: YUndoManager) -> Nil
 // 
