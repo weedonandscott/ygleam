@@ -27,7 +27,7 @@ export function parent(yArray) {
 }
 
 export function from(contentList) {
-  return Y.Array.from(contentList);
+  return Y.Array.from(contentList.toArray());
 }
 
 export function length(yArray) {
@@ -36,7 +36,7 @@ export function length(yArray) {
 
 export function insert(yArray, index, contentList) {
   try {
-    yArray.insert(index, contentList);
+    yArray.insert(index, contentList.toArray());
   } catch (e) {
     if (e.message?.toLowerCase().includes("length exceeded")) {
       return new Error(new LengthExceeded());
@@ -67,13 +67,13 @@ export function delete_from_index(yArray, index, length) {
 }
 
 export function push(yArray, contentList) {
-  yArray.push(contentList);
+  yArray.push(contentList.toArray());
 
   return yArray;
 }
 
 export function unshift(yArray, contentList) {
-  yArray.unshift(contentList);
+  yArray.unshift(contentList.toArray());
 
   return yArray;
 }
