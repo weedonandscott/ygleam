@@ -4,12 +4,14 @@ import { List, Ok, Error } from "./gleam.mjs";
 
 import { YArrayError, LengthExceeded } from "./ygleam/y_array.mjs";
 
-import { classifyKnownYValue, unwrapYValue } from "./utils.mjs";
-
 import * as AbstractType from "./abstractType.mjs";
 
-function unwrapContentList(contentList) {
-  return contentList.toArray().map((value) => unwrapYValue(value));
+export function decode(data) {
+  if (data instanceof Y.Array) {
+    return new Ok(data);
+  }
+
+  return new Error(new Y.Array());
 }
 
 export function do_new() {
@@ -25,7 +27,7 @@ export function parent(yArray) {
 }
 
 export function from(contentList) {
-  return Y.Array.from(unwrapContentList(contentList));
+  return Y.Array.from(contentList.toArray());
 }
 
 export function length(yArray) {
@@ -34,7 +36,7 @@ export function length(yArray) {
 
 export function insert(yArray, index, contentList) {
   try {
-    yArray.insert(index, unwrapContentList(contentList));
+    yArray.insert(index, contentList.toArray());
   } catch (e) {
     if (e.message?.toLowerCase().includes("length exceeded")) {
       return new Error(new LengthExceeded());
@@ -65,19 +67,19 @@ export function delete_from_index(yArray, index, length) {
 }
 
 export function push(yArray, contentList) {
-  yArray.push(unwrapContentList(contentList));
+  yArray.push(contentList.toArray());
 
   return yArray;
 }
 
 export function unshift(yArray, contentList) {
-  yArray.unshift(unwrapContentList(contentList));
+  yArray.unshift(contentList.toArray());
 
   return yArray;
 }
 
 export function get(yArray, index) {
-  return classifyKnownYValue(yArray.get(index));
+  return yArray.get(index);
 }
 
 export function slice(yArray, start, end) {
@@ -85,9 +87,7 @@ export function slice(yArray, start, end) {
 }
 
 export function toList(yArray) {
-  return List.fromArray(
-    yArray.toArray().map((value) => classifyKnownYValue(value)),
-  );
+  return List.fromArray(yArray.toArray());
 }
 
 export function toJSON(yArray) {
@@ -95,18 +95,14 @@ export function toJSON(yArray) {
 }
 
 export function forEach(yArray, cb) {
-  yArray.forEach((yValue, index, yArray) =>
-    cb(classifyKnownYValue(yValue), index, yArray),
-  );
+  yArray.forEach((yValue, index, yArray) => cb(yValue, index, yArray));
 
   return yArray;
 }
 
 export function map(yArray, cb) {
   return List.fromArray(
-    yArray.map((yValue, index, yArray) =>
-      cb(classifyKnownYValue(yValue), index, yArray),
-    ),
+    yArray.map((yValue, index, yArray) => cb(yValue, index, yArray)),
   );
 }
 

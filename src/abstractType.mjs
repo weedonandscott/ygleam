@@ -6,8 +6,6 @@ import { None, Some } from "../gleam_stdlib/gleam/option.mjs";
 
 import * as YGleamEvent from "./ygleam/y_event.mjs";
 
-import { classifyKnownYValue, toYType } from "./utils.mjs";
-
 export function doc(yAbstractType) {
   const doc = yAbstractType.doc;
   return doc ? Some(doc) : None;
@@ -19,7 +17,7 @@ export function parent(yAbstractType) {
   if (!parent) {
     return None;
   } else {
-    return Some(toYType(parent));
+    return Some(parent);
   }
 }
 
@@ -28,9 +26,7 @@ function changesKeys(yEvent) {
     Object.fromEntries(
       [...yEvent.changes.keys.entries()].map(([key, { action, oldValue }]) => {
         let typedAction;
-        const typedOldValue = oldValue
-          ? new Some(classifyKnownYValue(oldValue))
-          : new None();
+        const typedOldValue = oldValue ? new Some(oldValue) : new None();
 
         if (action === "add") {
           typedAction = new YGleamEvent.AddAction(typedOldValue);

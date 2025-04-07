@@ -3,6 +3,14 @@ import * as Y from "yjs";
 import { List, BitArray } from "./gleam.mjs";
 import { unwrap } from "../gleam_stdlib/gleam/option.mjs";
 
+export function decode(data) {
+  if (data instanceof Y.Doc) {
+    return new Ok(data);
+  }
+
+  return new Error(new Y.Doc());
+}
+
 export function do_new() {
   return new Y.Doc();
 }

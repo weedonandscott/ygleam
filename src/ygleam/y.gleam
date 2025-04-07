@@ -1,113 +1,123 @@
-import gleam/dynamic.{type Dynamic}
+import gleam/dict
 import gleam/json
 import gleam/list
 import gleam/option.{type Option, None, Some}
 
-/// The BaseType type represents the basic Javascript types Yjs can hold:
+pub type AbstractType
+
+pub type Transaction
+
+pub type Doc
+
+pub type Map
+
+pub type Array
+
+pub type Text
+
+pub type XmlFragment
+
+pub type XmlElement
+
+/// The Value type represents the JavaScript types Yjs can hold:
+///   - null
 ///   - String
 ///   - Boolean
 ///   - Number
 ///   - Uint8Array
-///   - Array<BaseType>
-///   - Object<String, BaseType>
-pub type BaseType
+///   - Array<Value>
+///   - Object<String, Value>
+///   - Any Yjs type
+pub type Value
 
-@external(javascript, "../../gleam_stdlib/gleam_stdlib.mjs", "identity")
-fn coerce_gleam_json(a: json.Json) -> BaseType
+@external(javascript, "../utils.mjs", "identity")
+fn do_coerce(a: any) -> Value
 
-pub fn string(input: String) -> BaseType {
-  coerce_gleam_json(json.string(input))
+/// Encodes a String to a y.Value
+pub fn string(input: String) -> Value {
+  do_coerce(input)
 }
 
-pub fn bool(input: Bool) -> BaseType {
-  coerce_gleam_json(json.bool(input))
+/// Encodes a Bool to a y.Value
+pub fn bool(input: Bool) -> Value {
+  do_coerce(input)
 }
 
-pub fn int(input: Int) -> BaseType {
-  coerce_gleam_json(json.int(input))
+/// Encodes an Int to a y.Value
+pub fn int(input: Int) -> Value {
+  do_coerce(input)
 }
 
-pub fn float(input: Float) -> BaseType {
-  coerce_gleam_json(json.float(input))
+/// Encodes a Float to a y.Value
+pub fn float(input: Float) -> Value {
+  do_coerce(input)
 }
 
+/// Encodes a BitArray to a y.Value
 @external(javascript, "../utils.mjs", "bitArray")
-pub fn bit_array(input: BitArray) -> BaseType
+pub fn bit_array(input: BitArray) -> Value
 
-pub fn null() -> BaseType {
-  coerce_gleam_json(json.null())
+/// Creates a null y.Value
+@external(javascript, "../utils.mjs", "do_null")
+pub fn null() -> Value
+
+/// Encodes a Yjs Map to a y.Value
+pub fn map(input: Map) -> Value {
+  do_coerce(input)
 }
 
-pub fn nullable(
-  from input: Option(a),
-  of inner_type: fn(a) -> BaseType,
-) -> BaseType {
+/// Encodes a Yjs Array to a y.Value
+pub fn array(input: Array) -> Value {
+  do_coerce(input)
+}
+
+/// Encodes a Yjs Text to a y.Value
+pub fn text(input: Text) -> Value {
+  do_coerce(input)
+}
+
+/// Encodes a Yjs XmlFragment to a y.Value
+pub fn xml_fragment(input: XmlFragment) -> Value {
+  do_coerce(input)
+}
+
+/// Encodes a Yjs XmlElement to a y.Value
+pub fn xml_element(input: XmlElement) -> Value {
+  do_coerce(input)
+}
+
+/// Encodes an optional value into a y.Value, using `null` if `None`
+pub fn nullable(from input: Option(a), of inner_type: fn(a) -> Value) -> Value {
   case input {
     Some(value) -> inner_type(value)
     None -> null()
   }
 }
 
-@external(javascript, "../../gleam_json/gleam_json_ffi.mjs", "object")
-pub fn object(input: List(#(String, BaseType))) -> BaseType
+/// Encode a list of key-value pairs into a JSON object.
+@external(javascript, "../utils.mjs", "do_object")
+pub fn object(entries: List(#(String, Value))) -> Value
 
-pub fn array(
-  from entries: List(a),
-  of inner_type: fn(a) -> BaseType,
-) -> BaseType {
+@external(javascript, "../utils.mjs", "do_array")
+pub fn preprocessed_js_array(from: List(Value)) -> Value
+
+/// Encode a list into a JS array.
+pub fn js_array(from entries: List(a), of inner_type: fn(a) -> Value) -> Value {
   entries
   |> list.map(inner_type)
-  |> preprocessed_array
+  |> preprocessed_js_array
 }
 
-@external(javascript, "../../gleam_json/gleam_json_ffi.mjs", "array")
-pub fn preprocessed_array(from: List(BaseType)) -> BaseType
-
-pub fn from_gleam_json(from: json.Json) -> BaseType {
-  coerce_gleam_json(from)
+pub fn from_json(from: json.Json) -> Value {
+  do_coerce(from)
 }
 
-pub type AbstractType
-
-pub type Transaction
-
-pub type YDoc
-
-pub type YMap
-
-pub type YArray
-
-pub type YText
-
-pub type YXmlFragment
-
-pub type YXmlElement
-
-pub type YType {
-  AbstractType(value: AbstractType)
-  YDoc(value: YDoc)
-  YMap(value: YMap)
-  YArray(value: YArray)
-  YText(value: YText)
-  YXmlFragment(value: YXmlFragment)
-  YXmlElement(value: YXmlElement)
-}
-
-pub type YValue {
-  // Can this be BaseType?
-  BaseType(value: Dynamic)
-  YType(value: YType)
-}
-
-pub fn decode(
-  yvalue: YValue,
-  decoder: dynamic.Decoder(a),
-) -> Result(a, dynamic.DecodeErrors) {
-  case yvalue {
-    BaseType(value) -> decoder(value)
-    _ ->
-      Error([
-        dynamic.DecodeError(expected: "BaseType", found: "YType", path: []),
-      ])
-  }
+/// Encode a Dict into a JSON object using the supplied functions to encode
+/// the keys and the values respectively.
+pub fn dict(
+  dict: dict.Dict(k, v),
+  keys: fn(k) -> String,
+  values: fn(v) -> Value,
+) -> Value {
+  object(dict.fold(dict, [], fn(acc, k, v) { [#(keys(k), values(v)), ..acc] }))
 }
