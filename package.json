@@ -1,6 +1,6 @@
 {
   "name": "gleam-yjs",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Yjs Gleam Bindings",
   "author": "Weedon & Scott Technologies <tech@weedonandscott.com>",
   "license": "Apache-2.0",

@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.8.0
+
+- BREAKING: Yjs shared types and returned values are not longer wrapped in
+  custom types. Instead, `Dynamic` is returned when fetching, and a new type,
+  `y.Value`, is used for input. Please consult the usage example in the README.
+- BREAKING: Upgrade depdencies
+  -> Moved to gleam/yielder where needed
+
 ## v0.7.0
 
 - Fix UndoManager creation
