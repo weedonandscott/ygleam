@@ -1,17 +1,17 @@
 import gleam/dict.{type Dict}
 import gleam/option.{type Option}
-import ygleam/y.{type BaseType, type Transaction, type YDoc}
+import ygleam/y
 
 pub type Awareness
 
 pub type AwarenessLocalState =
-  List(#(String, BaseType))
+  List(#(String, y.Value))
 
 pub type AwarenessStates =
   Dict(Float, AwarenessLocalState)
 
 @external(javascript, "../awareness.mjs", "do_new")
-pub fn new(ydoc: YDoc) -> Awareness
+pub fn new(ydoc: y.Doc) -> Awareness
 
 @external(javascript, "../awareness.mjs", "destroy")
 pub fn destroy(awareness: Awareness) -> Nil
@@ -29,7 +29,7 @@ pub fn set_local_state(
 pub fn set_local_state_field(
   awareness: Awareness,
   field: String,
-  value: BaseType,
+  value: y.Value,
 ) -> Nil
 
 @external(javascript, "../awareness.mjs", "getStates")
@@ -38,13 +38,13 @@ pub fn get_states(awareness: Awareness) -> AwarenessStates
 @external(javascript, "../awareness.mjs", "on_change")
 pub fn on_change(
   awareness: Awareness,
-  cb: fn(List(Int), List(Int), List(Int), Option(Transaction)) -> Nil,
+  cb: fn(List(Int), List(Int), List(Int), Option(y.Transaction)) -> Nil,
 ) -> Nil
 
 @external(javascript, "../awareness.mjs", "on_update")
 pub fn on_update(
   awareness: Awareness,
-  cb: fn(List(Int), List(Int), List(Int), Option(Transaction)) -> Nil,
+  cb: fn(List(Int), List(Int), List(Int), Option(y.Transaction)) -> Nil,
 ) -> Nil
 
 @external(javascript, "../awareness.mjs", "removeAwarenessStates")

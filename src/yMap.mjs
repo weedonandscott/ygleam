@@ -1,10 +1,17 @@
 import * as Y from "yjs";
 
 import * as AbstractType from "./abstractType.mjs";
-  classifyKnownYValue,
-  toGleamYielder,
-  unwrapYValue,
-} from "./utils.mjs";
+import { toGleamYielder } from "./utils.mjs";
+
+import { Ok, Error } from "./gleam.mjs";
+
+export function decode(data) {
+  if (data instanceof Y.Map) {
+    return new Ok(data);
+  }
+
+  return new Error(new Y.Map());
+}
 
 export function do_new() {
   return new Y.Map();
@@ -19,7 +26,7 @@ export function parent(yMap) {
 }
 
 export function set(yMap, key, value) {
-  yMap.set(key, unwrapYValue(value));
+  yMap.set(key, value);
 
   return yMap;
 }
@@ -31,7 +38,7 @@ export function setDynamic(yMap, key, value) {
 }
 
 export function get(yMap, key) {
-  return classifyKnownYValue(yMap.get(key));
+  return yMap.get(key);
 }
 
 export function getDynamic(yMap, key) {
@@ -58,24 +65,17 @@ export function size(yMap) {
 }
 
 export function forEach(yMap, cb) {
-  yMap.forEach((yValue, index, yMap) =>
-    cb(classifyKnownYValue(yValue), index, yMap),
-  );
+  yMap.forEach((yValue, index, yMap) => cb(yValue, index, yMap));
 
   return yMap;
 }
 
 export function entries(yMap) {
-  return toGleamYielder(yMap.entries(), (key, yValue) => [
-    key,
-    classifyKnownYValue(yValue),
-  ]);
+  return toGleamYielder(yMap.entries(), (key, yValue) => [key, yValue]);
 }
 
 export function values(yMap) {
-  return toGleamYielder(yMap.values(), (yValue) =>
-    classifyKnownYValue(yValue),
-  );
+  return toGleamYielder(yMap.values());
 }
 
 export function keys(yMap) {

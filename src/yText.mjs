@@ -2,6 +2,14 @@ import * as Y from "yjs";
 
 import { unwrap } from "../gleam_stdlib/gleam/option.mjs";
 
+export function decode(data) {
+  if (data instanceof Y.Text) {
+    return new Ok(data);
+  }
+
+  return new Error(new Y.Text());
+}
+
 export function do_new() {
   return new Y.Text();
 }

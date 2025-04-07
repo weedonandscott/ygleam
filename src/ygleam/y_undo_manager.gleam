@@ -1,4 +1,4 @@
-import ygleam/y.{type YType}
+import ygleam/y
 
 // pub type DeleteItem
 // 
@@ -32,7 +32,7 @@ pub type UndoType {
 }
 
 @external(javascript, "../yUndoManager.mjs", "do_new")
-pub fn new(scope: List(YType)) -> YUndoManager
+pub fn new(scope: List(y.Value)) -> YUndoManager
 
 @external(javascript, "../yUndoManager.mjs", "undo")
 pub fn undo(undo_manager: YUndoManager) -> Nil

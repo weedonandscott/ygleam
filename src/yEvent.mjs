@@ -2,14 +2,12 @@ import { List } from "./gleam.mjs";
 
 import { NumberSection, StringSection } from "./ygleam/y_event.mjs";
 
-import { toYType } from "./utils.mjs";
-
 export function target(anyEvent) {
-  return toYType(anyEvent.event.target);
+  return anyEvent.event.target;
 }
 
 export function currentTarget(anyEvent) {
-  return toYType(anyEvent.event.currentTarget);
+  return anyEvent.event.currentTarget;
 }
 
 export function transaction(anyEvent) {

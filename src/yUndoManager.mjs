@@ -2,10 +2,8 @@ import * as Y from "yjs";
 
 import * as YGleamUndoManager from "./ygleam/y_undo_manager.mjs";
 
-import { unwrapYValue } from "./utils.mjs";
-
 export function do_new(scope) {
-  return new Y.UndoManager(scope.toArray().map(unwrapYValue));
+  return new Y.UndoManager(scope.toArray());
 }
 
 export function undo(yUndoManager) {
