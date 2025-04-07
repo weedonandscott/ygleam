@@ -1,9 +1,9 @@
 import gleam/dynamic
-import gleam/iterator.{type Iterator}
 import gleam/option.{type Option}
 import ygleam/y.{
   type BaseType, type Transaction, type YDoc, type YMap, type YType, type YValue,
 }
+import gleam/yielder.{type Yielder}
 import ygleam/y_event.{type AnyYEvent, type ChangesKeys, type YMapEvent}
 
 @external(javascript, "../yMap.mjs", "do_new")
@@ -43,16 +43,16 @@ pub fn size(y_map: YMap) -> Int
 pub fn for_each(y_map: YMap, cb: fn(YValue, String, YMap) -> Nil) -> YMap
 
 @external(javascript, "../yMap.mjs", "entries")
-pub fn entries(y_map: YMap) -> Iterator(#(String, YValue))
+pub fn entries(y_map: YMap) -> Yielder(#(String, YValue))
 
 @external(javascript, "../yMap.mjs", "values")
-pub fn values(y_map: YMap) -> Iterator(YValue)
+pub fn values(y_map: YMap) -> Yielder(YValue)
 
 @external(javascript, "../yMap.mjs", "keys")
-pub fn keys(y_map: YMap) -> Iterator(String)
+pub fn keys(y_map: YMap) -> Yielder(String)
 
 @external(javascript, "../yMap.mjs", "clone")
-pub fn clone(y_map: YMap) -> YMap
+pub fn clone(y_map: YMap) -> y.Map
 
 @external(javascript, "../yMap.mjs", "observe")
 pub fn observe(

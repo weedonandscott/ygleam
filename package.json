@@ -9,14 +9,14 @@
     "prepare": "if [ \\\"$NODE_ENV\\\" != \\\"production\\\" ]; then husky; fi"
   },
   "dependencies": {
-    "lint-staged": "^15.2.11",
+    "lint-staged": "^15.5.0",
     "y-protocols": "1.0.6",
     "yjs": "13.6.20"
   },
   "devDependencies": {
     "husky": "9.1.7",
     "prettier": "3.4.2",
-    "typescript": "5.7.2"
+    "typescript": "5.8.3"
   },
   "lint-staged": {
     "*.{js,ts,mjs,cjs,json}": "pnpm lint"

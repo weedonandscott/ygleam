@@ -1,9 +1,8 @@
 import * as Y from "yjs";
 
 import * as AbstractType from "./abstractType.mjs";
-import {
   classifyKnownYValue,
-  toGleamIterator,
+  toGleamYielder,
   unwrapYValue,
 } from "./utils.mjs";
 
@@ -67,20 +66,20 @@ export function forEach(yMap, cb) {
 }
 
 export function entries(yMap) {
-  return toGleamIterator(yMap.entries(), (key, yValue) => [
+  return toGleamYielder(yMap.entries(), (key, yValue) => [
     key,
     classifyKnownYValue(yValue),
   ]);
 }
 
 export function values(yMap) {
-  return toGleamIterator(yMap.values(), (yValue) =>
+  return toGleamYielder(yMap.values(), (yValue) =>
     classifyKnownYValue(yValue),
   );
 }
 
 export function keys(yMap) {
-  return toGleamIterator(yMap.keys());
+  return toGleamYielder(yMap.keys());
 }
 
 export function clone(yMap) {

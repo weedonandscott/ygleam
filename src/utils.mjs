@@ -1,6 +1,6 @@
 import * as Y from "yjs";
 
-import * as GleamIterator from "../gleam_stdlib/gleam/iterator.mjs";
+import { unfold, Done, Next } from "../gleam_yielder/gleam/yielder.mjs";
 
 import * as YGleam from "./ygleam/y.mjs";
 
@@ -61,16 +61,13 @@ export function classifyKnownYValue(input) {
   return ytype ? new YGleam.YType(ytype) : new YGleam.BaseType(input);
 }
 
-export function toGleamIterator(jsIterator, transformer) {
-  return GleamIterator.unfold(jsIterator, (iter) => {
+export function toGleamYielder(jsIterator, transformer) {
+  return unfold(jsIterator, (iter) => {
     const next = iter.next();
     if (!next || next.done) {
-      return new GleamIterator.Done();
+      return new Done();
     } else {
-      return new GleamIterator.Next(
-        transformer ? transformer(next.value) : next.value,
-        iter,
-      );
+      return new Next(transformer ? transformer(next.value) : next.value, iter);
     }
   });
 }
