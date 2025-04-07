@@ -3,7 +3,7 @@ version = "0.8.0"
 licences = ["Apache-2.0"]
 description = "Yjs Gleam Bindings"
 
-gleam = "~> 1.0"
+gleam = "~> 1.9"
 target = "javascript"
 
 repository = { type = "github", user = "weedonandscott", repo = "gleam_yjs" }

@@ -7,6 +7,7 @@
   `y.Value`, is used for input. Please consult the usage example in the README.
 - BREAKING: Upgrade depdencies
   -> Moved to gleam/yielder where needed
+  -> Requires Gleam 1.9
 
 ## v0.7.0
 
