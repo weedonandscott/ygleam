@@ -4,7 +4,7 @@ Gleam bindings to [Yjs](https://github.com/yjs/yjs)
 
 ## Library state
 
-The bidnings to YDoc, YMap, YArray, YUndoManager and their event listeners are
+The bindings to YDoc, YMap, YArray, YUndoManager and their event listeners are
 solid. They are used in production daily at [Nestful](https://nestful.app).
 
 Other parts of the code were written on a best-effort basis and are untested, as
