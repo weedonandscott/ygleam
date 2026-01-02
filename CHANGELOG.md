@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.1
+
+- Upgrade depdencies
+
 ## v0.8.0
 
 - BREAKING: Yjs shared types and returned values are not longer wrapped in
