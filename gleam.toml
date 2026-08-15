@@ -1,12 +1,12 @@
 name = "ygleam"
-version = "0.8.1"
+version = "0.8.2"
 licences = ["Apache-2.0"]
 description = "Yjs Gleam Bindings"
 
 gleam = "~> 1.9"
 target = "javascript"
 
-repository = { type = "github", user = "weedonandscott", repo = "gleam_yjs" }
+repository = { type = "github", user = "weedonandscott", repo = "ygleam" }
 links = [
   { title = "Yjs", href = "https://yjs.dev" },
   { title = "Used by Nestful", href = "https://nestful.app" },

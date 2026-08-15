@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.8.2
+
+- Fix `y_array.index_of` looping forever on an empty array
+
 ## v0.8.1
 
 - Upgrade depdencies
