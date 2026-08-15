@@ -18,12 +18,11 @@
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
           packages = with pkgs; [
-            node2nix
             nodejs
             pnpm
             gleam
             typescript
-            nodePackages.typescript-language-server
+            typescript-language-server
           ];
         };
       });
