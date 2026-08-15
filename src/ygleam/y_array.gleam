@@ -84,22 +84,15 @@ fn index_of_loop(
   predicate: fn(Dynamic) -> Bool,
   index: Int,
 ) -> Result(Int, Nil) {
-  case
-    y_array
-    |> get(index)
-    |> predicate
-  {
-    True -> Ok(index)
+  case index >= length(y_array) {
+    True -> Error(Nil)
     False ->
       case
-        index
-        == {
-          y_array
-          |> length
-        }
-        - 1
+        y_array
+        |> get(index)
+        |> predicate
       {
-        True -> Error(Nil)
+        True -> Ok(index)
         False -> index_of_loop(y_array, predicate, index + 1)
       }
   }
